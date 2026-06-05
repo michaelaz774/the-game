@@ -6,6 +6,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useGame } from '../../game/useGame'
 import { Track } from '../track/Track'
+import { LapTimer } from '../LapTimer'
 import { QuestionCard } from '../quiz/QuestionCard'
 import { PIT_QUESTION_TIME_MS } from '../../types'
 import '../quiz/quiz.css'
@@ -117,6 +118,7 @@ export function PitStop(): JSX.Element {
 
   return (
     <div className="pit-screen">
+      <LapTimer />
       <Track progress={state.progress} phase="pit" />
 
       <div className="pit-screen__body">

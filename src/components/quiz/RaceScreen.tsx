@@ -6,6 +6,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useGame } from '../../game/useGame'
 import { Track } from '../track/Track'
+import { LapTimer } from '../LapTimer'
 import { QuestionCard } from './QuestionCard'
 import './quiz.css'
 
@@ -57,6 +58,7 @@ export function RaceScreen(): JSX.Element {
 
   return (
     <div className="race-screen">
+      <LapTimer />
       <Track progress={state.progress} phase="race" />
 
       <div className="race-screen__body">

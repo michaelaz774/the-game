@@ -16,7 +16,8 @@ import { raceAnswerPenalty, pitAnswerPenalty, computeProgress } from './scoring'
 // Configuration
 // ---------------------------------------------------------------------------
 
-const RACE_Q_COUNT = 10
+// 10 questions total per lap: 6 on the track + a 4-question pit stop.
+const RACE_Q_COUNT = 6
 const PIT_Q_COUNT = 4
 
 // ---------------------------------------------------------------------------
