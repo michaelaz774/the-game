@@ -1,0 +1,529 @@
+/* ============================================================================
+   pitwall.css — styles owned by Agent 5 (Landing, Result, Leaderboard).
+   Uses CSS variables from theme.css — do not redefine :root here.
+   ============================================================================ */
+
+/* ── LANDING ────────────────────────────────────────────────────────────────── */
+
+.pw-landing {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px 40px;
+  gap: 0;
+  text-align: center;
+  overflow-y: auto;
+}
+
+/* Top checkered stripe */
+.pw-landing__stripe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background-image:
+    linear-gradient(45deg, #000 25%, transparent 25%),
+    linear-gradient(-45deg, #000 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #000 75%),
+    linear-gradient(-45deg, transparent 75%, #000 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+  background-color: #fff;
+}
+
+.pw-landing__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--rbc-blue);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 40px;
+  margin-top: 28px;
+  margin-bottom: 24px;
+}
+
+.pw-landing__badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--f1-red);
+  animation: pw-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pw-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.pw-landing__title {
+  font-size: clamp(30px, 8vw, 44px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+  color: var(--ink);
+}
+
+.pw-landing__title span {
+  color: var(--f1-red);
+}
+
+.pw-landing__sub {
+  font-size: clamp(13px, 3.5vw, 16px);
+  color: var(--ink-dim);
+  margin: 0 0 36px;
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+/* Stat pills row */
+.pw-landing__stats {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pw-landing__stat {
+  background: var(--carbon);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 10px 16px;
+  text-align: center;
+  min-width: 80px;
+}
+
+.pw-landing__stat-num {
+  display: block;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--rbc-gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.pw-landing__stat-lbl {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-top: 2px;
+}
+
+/* Name input form */
+.pw-landing__form {
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pw-landing__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  text-align: left;
+}
+
+.pw-landing__req {
+  color: var(--f1-red);
+}
+
+.pw-landing__opt {
+  color: var(--ink-dim);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.pw-landing__consent {
+  margin: 12px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-dim);
+  text-align: center;
+}
+
+.pw-landing__input {
+  width: 100%;
+  min-height: 58px;
+  background: var(--carbon);
+  border: 2px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 700;
+  font-family: var(--font);
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 0 16px;
+  outline: none;
+  transition: border-color 0.15s ease;
+  -webkit-appearance: none;
+}
+
+.pw-landing__input:focus {
+  border-color: var(--rbc-blue);
+  box-shadow: 0 0 0 3px rgba(0, 70, 173, 0.25);
+}
+
+.pw-landing__input::placeholder {
+  color: var(--ink-dim);
+  font-weight: 400;
+  letter-spacing: normal;
+}
+
+.pw-landing__go {
+  width: 100%;
+  min-height: 62px;
+  background: var(--f1-red);
+  border: none;
+  border-radius: var(--radius);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(225, 6, 0, 0.45);
+  transition: transform 0.08s ease, filter 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pw-landing__go:active:not(:disabled) {
+  transform: scale(0.97);
+  filter: brightness(0.92);
+}
+
+.pw-landing__go:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.pw-landing__footer {
+  margin-top: 32px;
+  font-size: 11px;
+  color: var(--ink-dim);
+  opacity: 0.6;
+  letter-spacing: 0.04em;
+}
+
+/* ── RESULT ─────────────────────────────────────────────────────────────────── */
+
+.pw-result {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow-y: auto;
+  padding-bottom: 40px;
+}
+
+/* Checkered header banner */
+.pw-result__header {
+  height: 8px;
+  flex-shrink: 0;
+  background-image:
+    linear-gradient(45deg, #000 25%, transparent 25%),
+    linear-gradient(-45deg, #000 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #000 75%),
+    linear-gradient(-45deg, transparent 75%, #000 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+  background-color: #fff;
+}
+
+/* Hero lap-time card (the "screenshot-worthy" result card) */
+.pw-result__card {
+  margin: 16px 20px 0;
+  background: linear-gradient(145deg, var(--rbc-blue-deep) 0%, var(--carbon) 100%);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 28px 24px 24px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative corner accents */
+.pw-result__card::before,
+.pw-result__card::after {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--f1-red);
+  opacity: 0.08;
+}
+
+.pw-result__card::before { top: -30px; right: -30px; }
+.pw-result__card::after  { bottom: -30px; left: -30px; }
+
+.pw-result__race-name {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--rbc-gold);
+  margin-bottom: 6px;
+}
+
+.pw-result__player-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.pw-result__lap-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 4px;
+}
+
+.pw-result__lap-time {
+  font-size: clamp(42px, 12vw, 60px);
+  font-weight: 900;
+  font-family: var(--font-mono);
+  color: var(--rbc-gold);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 20px;
+  text-shadow: 0 0 40px rgba(254, 223, 1, 0.3);
+}
+
+.pw-result__score-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.pw-result__score-pill {
+  background: rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-dim);
+}
+
+.pw-result__score-pill strong {
+  color: var(--ink);
+  font-size: 15px;
+}
+
+/* CTA / data scientist card */
+.pw-result__cta {
+  margin: 16px 20px 0;
+  background: var(--carbon);
+  border: 1px solid rgba(0, 70, 173, 0.4);
+  border-left: 4px solid var(--rbc-blue);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.pw-result__cta-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.pw-result__cta-body {}
+
+.pw-result__cta-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.pw-result__cta-text {
+  font-size: 13px;
+  color: var(--ink-dim);
+  line-height: 1.5;
+}
+
+/* Action buttons */
+.pw-result__actions {
+  margin: 20px 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pw-result__again-btn {
+  min-height: 58px;
+  background: var(--f1-red);
+  border: none;
+  border-radius: var(--radius);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(225, 6, 0, 0.4);
+  transition: transform 0.08s ease, filter 0.15s ease;
+  font-family: var(--font);
+}
+
+.pw-result__again-btn:active {
+  transform: scale(0.97);
+  filter: brightness(0.92);
+}
+
+/* ── LEADERBOARD ─────────────────────────────────────────────────────────────── */
+
+.pw-lb {
+  margin: 24px 20px 0;
+}
+
+.pw-lb__title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pw-lb__title::before {
+  content: '';
+  display: block;
+  width: 3px;
+  height: 14px;
+  background: var(--f1-red);
+  border-radius: 2px;
+}
+
+/* timing-tower container */
+.pw-lb__tower {
+  background: var(--carbon);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.pw-lb__loading,
+.pw-lb__empty {
+  padding: 20px;
+  text-align: center;
+  color: var(--ink-dim);
+  font-size: 13px;
+}
+
+.pw-lb__row {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.15s ease;
+  min-height: 52px;
+}
+
+.pw-lb__row:last-child {
+  border-bottom: none;
+}
+
+/* Highlight the current player */
+.pw-lb__row--highlight {
+  background: rgba(0, 70, 173, 0.2);
+  border-left: 3px solid var(--rbc-blue);
+}
+
+.pw-lb__row--p1 {
+  background: rgba(254, 223, 1, 0.07);
+}
+
+.pw-lb__row--p1.pw-lb__row--highlight {
+  background: rgba(254, 223, 1, 0.12);
+}
+
+.pw-lb__pos {
+  font-size: 13px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--ink-dim);
+  text-align: center;
+}
+
+.pw-lb__row--p1 .pw-lb__pos {
+  color: var(--rbc-gold);
+  font-size: 15px;
+}
+
+.pw-lb__info {}
+
+.pw-lb__name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+.pw-lb__row--highlight .pw-lb__name::after {
+  content: ' ◀';
+  color: var(--rbc-blue);
+  font-size: 11px;
+}
+
+.pw-lb__score-meta {
+  font-size: 11px;
+  color: var(--ink-dim);
+  margin-top: 2px;
+}
+
+.pw-lb__times {
+  text-align: right;
+}
+
+.pw-lb__laptime {
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--ink);
+}
+
+.pw-lb__row--p1 .pw-lb__laptime {
+  color: var(--rbc-gold);
+}
+
+.pw-lb__gap {
+  font-size: 11px;
+  color: var(--ink-dim);
+  font-family: var(--font-mono);
+  margin-top: 2px;
+  text-align: right;
+}

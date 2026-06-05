@@ -1,0 +1,390 @@
+/* ============================================================================
+   quiz.css — styles for QuestionCard, RaceScreen, and PitStop.
+   Uses only theme CSS variables from theme.css.
+   ============================================================================ */
+
+/* ---- QuestionCard -------------------------------------------------------- */
+
+.qcard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 16px 20px;
+}
+
+.qcard__category {
+  display: inline-block;
+  align-self: flex-start;
+  background: var(--rbc-blue);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.qcard__text {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.qcard__options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.qcard__btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 14px 16px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  background: var(--carbon);
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease, transform 0.08s ease;
+  width: 100%;
+}
+
+.qcard__btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.qcard__btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.qcard__btn--correct {
+  background: color-mix(in srgb, var(--correct) 20%, var(--carbon));
+  border-color: var(--correct);
+  color: var(--correct);
+}
+
+.qcard__btn--wrong {
+  background: color-mix(in srgb, var(--wrong) 20%, var(--carbon));
+  border-color: var(--wrong);
+  color: var(--wrong);
+}
+
+.qcard__btn-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.qcard__btn--correct .qcard__btn-letter {
+  background: var(--correct);
+  color: var(--asphalt);
+}
+
+.qcard__btn--wrong .qcard__btn-letter {
+  background: var(--wrong);
+  color: var(--ink);
+}
+
+.qcard__btn-text {
+  flex: 1;
+  line-height: 1.3;
+}
+
+/* ---- RaceScreen ---------------------------------------------------------- */
+
+.race-screen {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.race-screen__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 0 16px;
+  background: linear-gradient(180deg, transparent 0%, var(--asphalt-2) 40%);
+}
+
+.race-screen__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px 4px;
+}
+
+.race-screen__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rbc-gold);
+}
+
+.race-screen__counter {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.race-screen__loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-dim);
+  font-size: 16px;
+}
+
+.race-screen__funfact {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 4px 16px 0;
+  padding: 12px 14px;
+  background: color-mix(in srgb, var(--rbc-blue) 25%, var(--carbon));
+  border-left: 3px solid var(--rbc-blue);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+  animation: slide-in 0.25s ease;
+}
+
+.race-screen__funfact-icon {
+  font-size: 15px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ---- PitStop screen ----------------------------------------------------- */
+
+.pit-screen {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--asphalt) 0%, var(--asphalt-2) 100%);
+}
+
+.pit-screen__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 16px 16px;
+  gap: 12px;
+}
+
+.pit-screen__header {
+  padding-top: 10px;
+  text-align: center;
+}
+
+.pit-screen__headline {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--f1-red);
+  text-shadow: 0 0 20px rgba(225, 6, 0, 0.6);
+  line-height: 1;
+}
+
+.pit-screen__subline {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-top: 3px;
+}
+
+.pit-screen__loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-dim);
+  font-size: 16px;
+}
+
+/* ---- Tire slots ---------------------------------------------------------- */
+
+.pit-tires {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 4px 0;
+}
+
+.pit-tire {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.pit-tire svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* SVG parts */
+.pit-tire__outer {
+  stroke: rgba(255, 255, 255, 0.2);
+  fill: rgba(255, 255, 255, 0.04);
+}
+
+.pit-tire__rim {
+  stroke: rgba(255, 255, 255, 0.15);
+  fill: none;
+}
+
+.pit-tire__spoke {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+/* Active (current question) */
+.pit-tire--active .pit-tire__outer {
+  stroke: var(--f1-red);
+  fill: rgba(225, 6, 0, 0.12);
+  animation: pulse-tire 0.8s ease-in-out infinite alternate;
+}
+
+.pit-tire--active .pit-tire__rim {
+  stroke: var(--f1-red);
+}
+
+.pit-tire--active .pit-tire__spoke {
+  stroke: rgba(225, 6, 0, 0.5);
+}
+
+/* Snapping on */
+.pit-tire--snapping {
+  transform: scale(1.15);
+}
+
+.pit-tire--snapping .pit-tire__outer {
+  stroke: var(--correct);
+  fill: rgba(0, 210, 122, 0.2);
+}
+
+.pit-tire--snapping .pit-tire__rim {
+  stroke: var(--correct);
+}
+
+/* Done */
+.pit-tire--done .pit-tire__outer {
+  stroke: var(--correct);
+  fill: rgba(0, 210, 122, 0.15);
+  animation: none;
+}
+
+.pit-tire--done .pit-tire__rim {
+  stroke: var(--correct);
+}
+
+.pit-tire--done .pit-tire__spoke {
+  stroke: rgba(0, 210, 122, 0.5);
+}
+
+.pit-tire__num {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--ink-dim);
+  bottom: -2px;
+  right: 2px;
+  pointer-events: none;
+}
+
+.pit-tire--done .pit-tire__num {
+  color: var(--correct);
+}
+
+.pit-tire--active .pit-tire__num {
+  color: var(--f1-red);
+}
+
+/* ---- Countdown bar ------------------------------------------------------ */
+
+.pit-countdown {
+  position: relative;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.pit-countdown__bar {
+  position: absolute;
+  inset: 0;
+  background: var(--f1-green);
+  transform-origin: left center;
+  border-radius: 4px;
+  transition: transform 0.05s linear, background 0.3s ease;
+  will-change: transform;
+}
+
+.pit-countdown--warning .pit-countdown__bar {
+  background: var(--rbc-gold);
+}
+
+.pit-countdown--critical .pit-countdown__bar {
+  background: var(--f1-red);
+  animation: bar-flash 0.3s ease infinite alternate;
+}
+
+/* ---- Keyframes ----------------------------------------------------------- */
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-tire {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bar-flash {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
