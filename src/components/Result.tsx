@@ -21,7 +21,6 @@ export function Result() {
     const entry: ScoreEntry = {
       name: state.playerName || 'ANON',
       department: state.department || undefined,
-      linkedin: state.linkedin || undefined,
       lapTimeMs: state.lapTimeMs,
       correct: state.correctCount,
       total: state.raceQuestions.length + state.pitQuestions.length,

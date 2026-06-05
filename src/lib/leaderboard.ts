@@ -21,7 +21,6 @@ export async function submitScore(entry: ScoreEntry): Promise<void> {
     await sb.from(TABLE).insert({
       name: entry.name,
       department: entry.department ?? null,
-      linkedin: entry.linkedin ?? null,
       lap_time_ms: entry.lapTimeMs,
       correct: entry.correct,
       total: entry.total,
@@ -47,7 +46,7 @@ export async function fetchTopScores(limit: number): Promise<ScoreEntry[]> {
     try {
       const { data, error } = await sb
         .from(TABLE)
-        .select('name, department, linkedin, lap_time_ms, correct, total, created_at')
+        .select('name, department, lap_time_ms, correct, total, created_at')
         .order('lap_time_ms', { ascending: true })
         .limit(limit)
 
@@ -55,7 +54,6 @@ export async function fetchTopScores(limit: number): Promise<ScoreEntry[]> {
         remote = data.map((row) => ({
           name: row.name as string,
           department: (row.department as string | null) ?? undefined,
-          linkedin: (row.linkedin as string | null) ?? undefined,
           lapTimeMs: row.lap_time_ms as number,
           correct: row.correct as number,
           total: row.total as number,

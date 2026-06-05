@@ -44,7 +44,6 @@ function buildInitialState(): GameState {
     screen: 'landing',
     playerName: '',
     department: '',
-    linkedin: '',
     raceQuestions: raceQs,
     pitQuestions: pitQs,
     phase: 'race',
@@ -64,7 +63,7 @@ function buildInitialState(): GameState {
 // ---------------------------------------------------------------------------
 
 type Action =
-  | { type: 'SET_PROFILE'; name: string; department: string; linkedin: string }
+  | { type: 'SET_PROFILE'; name: string; department: string }
   | { type: 'START_RACE' }
   | { type: 'BEGIN_LAP' }
   | { type: 'ANSWER_RACE'; option: 0 | 1 }
@@ -83,7 +82,6 @@ function reducer(state: GameState, action: Action): GameState {
         ...state,
         playerName: action.name,
         department: action.department,
-        linkedin: action.linkedin,
       }
     }
 
@@ -202,12 +200,11 @@ export function GameProvider({ children }: { children: React.ReactNode }): JSX.E
   const [state, dispatch] = useReducer(reducer, undefined, buildInitialState)
 
   const setProfile = useCallback(
-    (p: { name: string; department: string; linkedin?: string }) => {
+    (p: { name: string; department: string }) => {
       dispatch({
         type: 'SET_PROFILE',
         name: p.name,
         department: p.department,
-        linkedin: p.linkedin ?? '',
       })
     },
     [],

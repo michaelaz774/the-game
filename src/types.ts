@@ -29,7 +29,6 @@ export type GameScreen =
 export interface ScoreEntry {
   name: string
   department?: string // captured at sign-in (lead capture for the booth)
-  linkedin?: string // optional LinkedIn handle/URL the player chose to share
   lapTimeMs: number // total lap time INCLUDING penalties
   correct: number
   total: number
@@ -41,7 +40,6 @@ export interface GameState {
   screen: GameScreen
   playerName: string
   department: string // captured on the landing form
-  linkedin: string // optional, captured on the landing form
   raceQuestions: Question[] // ordered race-sector questions
   pitQuestions: Question[] // exactly 4 pit-stop questions
   phase: Phase // which question list is active
@@ -64,7 +62,7 @@ export interface GameApi {
   phaseTotal: number
 
   /** Capture the player's sign-in details on the landing screen. */
-  setProfile(p: { name: string; department: string; linkedin?: string }): void
+  setProfile(p: { name: string; department: string }): void
   startRace(): void // landing -> lights
   beginLap(): void // lights done -> racing; starts the lap timer
   /** Answer a race question. Returns whether it was correct. Auto-advances; transitions to 'pit' after the last race question. */

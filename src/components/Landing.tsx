@@ -6,11 +6,10 @@ export function Landing() {
   const game = useGame()
   const [name, setName] = useState('')
   const [department, setDepartment] = useState('')
-  const [linkedin, setLinkedin] = useState('')
 
   const trimmedName = name.trim()
   const trimmedDept = department.trim()
-  // Name is required; department strongly encouraged; LinkedIn fully optional.
+  // Both name and department are required to start.
   const canGo = trimmedName.length > 0 && trimmedDept.length > 0
 
   function handleGo() {
@@ -18,7 +17,6 @@ export function Landing() {
     game.setProfile({
       name: trimmedName,
       department: trimmedDept,
-      linkedin: linkedin.trim(),
     })
     game.startRace()
   }
@@ -83,25 +81,6 @@ export function Landing() {
           placeholder="e.g. Capital Markets"
           value={department}
           onChange={(e) => setDepartment(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
-
-        <label className="pw-landing__label" htmlFor="driver-linkedin">
-          LinkedIn <span className="pw-landing__opt">(optional)</span>
-        </label>
-        <input
-          id="driver-linkedin"
-          className="pw-landing__input"
-          type="text"
-          inputMode="url"
-          autoComplete="off"
-          autoCapitalize="none"
-          autoCorrect="off"
-          spellCheck={false}
-          maxLength={120}
-          placeholder="linkedin.com/in/you"
-          value={linkedin}
-          onChange={(e) => setLinkedin(e.target.value)}
           onKeyDown={handleKeyDown}
         />
 

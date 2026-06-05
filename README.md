@@ -60,7 +60,6 @@ create table if not exists scores (
   id          bigint generated always as identity primary key,
   name        text        not null,
   department  text,
-  linkedin    text,
   lap_time_ms integer     not null,
   correct     integer     not null,
   total       integer     not null,
