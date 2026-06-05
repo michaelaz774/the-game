@@ -5,17 +5,27 @@ import './pitwall.css'
 export function Landing() {
   const game = useGame()
   const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
   const [department, setDepartment] = useState('')
 
   const trimmedName = name.trim()
+  const trimmedEmail = email.trim()
   const trimmedDept = department.trim()
-  // Both name and department are required to start.
-  const canGo = trimmedName.length > 0 && trimmedDept.length > 0
+
+  // Require a valid RBC email (rbc.com, rbccm.com, rbcwm.com, rbc.ca, …).
+  const emailDomain = trimmedEmail.split('@')[1] ?? ''
+  const emailValid =
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail) && /(^|\.)rbc/i.test(emailDomain)
+  const emailError = trimmedEmail.length > 0 && !emailValid
+
+  // Name, RBC email, and department are all required to start.
+  const canGo = trimmedName.length > 0 && emailValid && trimmedDept.length > 0
 
   function handleGo() {
     if (!canGo) return
     game.setProfile({
       name: trimmedName,
+      email: trimmedEmail.toLowerCase(),
       department: trimmedDept,
     })
     game.startRace()
@@ -66,6 +76,29 @@ export function Landing() {
           onChange={(e) => setName(e.target.value)}
           onKeyDown={handleKeyDown}
         />
+
+        <label className="pw-landing__label" htmlFor="driver-email">
+          RBC Email <span className="pw-landing__req">*</span>
+        </label>
+        <input
+          id="driver-email"
+          className={`pw-landing__input${emailError ? ' pw-landing__input--error' : ''}`}
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          autoCapitalize="none"
+          autoCorrect="off"
+          spellCheck={false}
+          maxLength={60}
+          placeholder="you@rbc.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={handleKeyDown}
+          aria-invalid={emailError}
+        />
+        {emailError && (
+          <p className="pw-landing__hint">Please use your RBC email address.</p>
+        )}
 
         <label className="pw-landing__label" htmlFor="driver-dept">
           Department <span className="pw-landing__req">*</span>

@@ -20,6 +20,7 @@ export function Result() {
 
     const entry: ScoreEntry = {
       name: state.playerName || 'ANON',
+      email: state.email || undefined,
       department: state.department || undefined,
       lapTimeMs: state.lapTimeMs,
       correct: state.correctCount,

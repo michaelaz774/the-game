@@ -157,6 +157,18 @@
   text-align: center;
 }
 
+.pw-landing__input--error {
+  border-color: var(--f1-red) !important;
+}
+
+.pw-landing__hint {
+  margin: -6px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--f1-red);
+  text-align: left;
+}
+
 .pw-landing__input {
   width: 100%;
   min-height: 58px;

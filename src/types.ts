@@ -28,6 +28,7 @@ export type GameScreen =
 /** A leaderboard / personal-best record. */
 export interface ScoreEntry {
   name: string
+  email?: string // RBC email captured at sign-in (lead capture for the booth)
   department?: string // captured at sign-in (lead capture for the booth)
   lapTimeMs: number // total lap time INCLUDING penalties
   correct: number
@@ -39,6 +40,7 @@ export interface ScoreEntry {
 export interface GameState {
   screen: GameScreen
   playerName: string
+  email: string // RBC email, captured on the landing form
   department: string // captured on the landing form
   raceQuestions: Question[] // ordered race-sector questions
   pitQuestions: Question[] // exactly 4 pit-stop questions
@@ -62,7 +64,7 @@ export interface GameApi {
   phaseTotal: number
 
   /** Capture the player's sign-in details on the landing screen. */
-  setProfile(p: { name: string; department: string }): void
+  setProfile(p: { name: string; email: string; department: string }): void
   startRace(): void // landing -> lights
   beginLap(): void // lights done -> racing; starts the lap timer
   /** Answer a race question. Returns whether it was correct. Auto-advances; transitions to 'pit' after the last race question. */

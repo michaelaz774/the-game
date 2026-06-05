@@ -59,6 +59,7 @@ Run this SQL in the Supabase SQL editor:
 create table if not exists scores (
   id          bigint generated always as identity primary key,
   name        text        not null,
+  email       text,
   department  text,
   lap_time_ms integer     not null,
   correct     integer     not null,
