@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useGame } from '../game/useGame'
 import { formatLapTime } from '../game/timing'
 import type { ScoreEntry } from '../types'
@@ -10,6 +10,9 @@ export function Result() {
   const game = useGame()
   const { state } = game
   const submitted = useRef(false)
+  // Bumped after the score is submitted so the leaderboard refetches and the
+  // player sees themselves immediately (child effects run before this one).
+  const [refreshKey, setRefreshKey] = useState(0)
 
   // Submit score exactly once on mount
   useEffect(() => {
@@ -28,7 +31,10 @@ export function Result() {
       createdAt: state.finishedAt,
     }
 
-    submitScore(entry)
+    // localStorage write inside submitScore is synchronous, so refresh now for
+    // an instant local update; refresh again once the remote insert resolves.
+    submitScore(entry).then(() => setRefreshKey((k) => k + 1))
+    setRefreshKey((k) => k + 1)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -90,7 +96,7 @@ export function Result() {
       </div>
 
       {/* Leaderboard */}
-      <Leaderboard highlightName={state.playerName} />
+      <Leaderboard highlightName={state.playerName} refreshKey={refreshKey} />
     </div>
   )
 }

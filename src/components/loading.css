@@ -1,0 +1,74 @@
+/* loading.css — first-load splash / buffering screen */
+
+.loading {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 32px;
+  text-align: center;
+  animation: loading-fade-in 0.3s ease both;
+}
+
+@keyframes loading-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Spinning tyre */
+.loading__tyre {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: 10px solid var(--carbon);
+  border-top-color: var(--f1-red);
+  box-shadow: inset 0 0 0 6px #05070d, var(--shadow);
+  animation: loading-spin 0.9s linear infinite;
+}
+
+@keyframes loading-spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading__title {
+  margin: 6px 0 0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+.loading__sub {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+}
+
+/* Progress bar */
+.loading__bar {
+  width: min(280px, 80%);
+  height: 10px;
+  border-radius: 999px;
+  background: var(--carbon);
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.loading__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--rbc-blue), var(--f1-red));
+  transition: width 0.2s ease;
+}
+
+.loading__pct {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}

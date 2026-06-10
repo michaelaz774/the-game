@@ -6,9 +6,11 @@ import '../pitwall.css'
 
 interface LeaderboardProps {
   highlightName?: string
+  /** Bump this to force a refetch (e.g. after the player's score is submitted). */
+  refreshKey?: number
 }
 
-export default function Leaderboard({ highlightName }: LeaderboardProps) {
+export default function Leaderboard({ highlightName, refreshKey = 0 }: LeaderboardProps) {
   const [scores, setScores] = useState<ScoreEntry[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -21,7 +23,7 @@ export default function Leaderboard({ highlightName }: LeaderboardProps) {
       }
     })
     return () => { cancelled = true }
-  }, [])
+  }, [refreshKey])
 
   const leaderTime = scores.length > 0 ? scores[0].lapTimeMs : null
 

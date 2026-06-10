@@ -5,8 +5,9 @@
 // itself full-bleed inside .gp-stage. App only switches on state.screen.
 // ============================================================================
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { GameProvider, useGame } from './game/useGame'
+import { Loading } from './components/Loading'
 import { Landing } from './components/Landing'
 import { LightsOut } from './components/track/LightsOut'
 import { RaceScreen } from './components/quiz/RaceScreen'
@@ -47,11 +48,19 @@ function Screens() {
 }
 
 export default function App() {
+  // Hold on the splash until both audio cues are buffered (prefetchAudio),
+  // so the lights/beep and music are ready the instant the player starts.
+  const [ready, setReady] = useState(false)
+
   return (
-    <GameProvider>
-      <div className="gp-stage">
-        <Screens />
-      </div>
-    </GameProvider>
+    <div className="gp-stage">
+      {ready ? (
+        <GameProvider>
+          <Screens />
+        </GameProvider>
+      ) : (
+        <Loading onReady={() => setReady(true)} />
+      )}
+    </div>
   )
 }
