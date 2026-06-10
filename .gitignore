@@ -26,3 +26,4 @@ vite.config.d.ts
 
 # local Claude Code config
 .claude/
+.vercel
