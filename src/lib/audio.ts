@@ -139,10 +139,38 @@ export function stopStartingLights(): void {
 // Background music ("Lose My Mind") — loops while the player races.
 // ---------------------------------------------------------------------------
 
+/**
+ * "Unlock" the music element for later, timer-driven playback.
+ *
+ * Call this from inside a user gesture (the Landing GO tap). The race music
+ * doesn't actually start until the lights go out, but that transition is
+ * timer-driven (no gesture), and browsers reject the *first* play() on an
+ * element unless it happens during a gesture. So here we briefly play it muted
+ * and immediately pause+rewind: the element is now "blessed" and a later
+ * startMusic() will play even without a fresh gesture — without making any
+ * sound during the countdown.
+ */
+export function primeMusic(): void {
+  const el = getMusic()
+  if (!el.src) el.src = musicUrl // fallback if prefetch hasn't run
+  el.muted = true
+  void el
+    .play()
+    .then(() => {
+      el.pause()
+      el.currentTime = 0
+      el.muted = false
+    })
+    .catch(() => {
+      el.muted = false
+    })
+}
+
 /** Start the looping race music. Idempotent — no-op if already playing. */
 export function startMusic(): void {
   const el = getMusic()
   if (!el.src) el.src = musicUrl // fallback if prefetch hasn't run
+  el.muted = false
   if (!el.paused) return
   void el.play().catch(() => {})
 }

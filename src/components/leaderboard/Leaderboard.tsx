@@ -16,9 +16,9 @@ export default function Leaderboard({ highlightName, refreshKey = 0 }: Leaderboa
 
   useEffect(() => {
     let cancelled = false
-    fetchTopScores(8).then((top) => {
+    fetchTopScores(8).then(({ entries }) => {
       if (!cancelled) {
-        setScores(top)
+        setScores(entries)
         setLoading(false)
       }
     })

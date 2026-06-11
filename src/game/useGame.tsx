@@ -33,13 +33,25 @@ function shuffle<T>(arr: T[]): T[] {
   return a
 }
 
+// Randomly swap a question's two options (and its correctIndex to match) so
+// players can't memorise answers by position. correctIndex stays the source of
+// truth, so the rest of the engine/UI keeps working unchanged.
+function randomizeOptions(q: Question): Question {
+  if (Math.random() < 0.5) return q
+  return {
+    ...q,
+    options: [q.options[1], q.options[0]],
+    correctIndex: q.correctIndex === 0 ? 1 : 0,
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Initial state factory
 // ---------------------------------------------------------------------------
 
 function buildInitialState(): GameState {
-  const raceQs = shuffle(allRaceQuestions).slice(0, RACE_Q_COUNT)
-  const pitQs = shuffle(allPitQuestions).slice(0, PIT_Q_COUNT)
+  const raceQs = shuffle(allRaceQuestions).slice(0, RACE_Q_COUNT).map(randomizeOptions)
+  const pitQs = shuffle(allPitQuestions).slice(0, PIT_Q_COUNT).map(randomizeOptions)
 
   return {
     screen: 'landing',

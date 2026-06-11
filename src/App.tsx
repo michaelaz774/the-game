@@ -19,8 +19,10 @@ import { startMusic, stopMusic } from './lib/audio'
 function Screens() {
   const { state } = useGame()
 
-  // "Lose My Mind" loops while the player is racing (track + pit stop),
-  // and stops once they cross the finish line.
+  // "Lose My Mind" starts when the lights go out (the race begins), loops
+  // through the track + pit stop, and stops once they cross the finish line.
+  // The element is unlocked earlier by primeMusic() on the Landing GO tap, so
+  // this timer-driven start (no gesture of its own) is allowed to play.
   useEffect(() => {
     if (state.screen === 'racing' || state.screen === 'pit') {
       startMusic()

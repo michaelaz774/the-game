@@ -111,6 +111,58 @@ export const raceQuestions: Question[] = [
     correctIndex: 0,
     funFact: 'Fraud patterns evolve, spending habits change with the economy, and yesterday\'s training data becomes stale. MLOps teams watch performance metrics continuously — like an F1 crew tracking tyre deg lap by lap — and trigger retraining before performance falls off a cliff.',
   },
+
+  // ── RBC & AI (the "home team" questions) ────────────────────────────────────
+
+  {
+    id: 'race-11',
+    phase: 'race',
+    category: 'RBC & AI',
+    text: "What is RBC's ranking in the 2025 Evident AI Index globally?",
+    options: ['Third out of 50 financial institutions', 'Fifth out of 50 financial institutions'],
+    correctIndex: 0,
+    funFact: 'RBC ranks third out of 50 of the world\'s largest financial institutions in the 2025 Evident AI Index — a global benchmark of how banks build AI talent, innovation, leadership, and responsible-AI practices.',
+  },
+
+  {
+    id: 'race-12',
+    phase: 'race',
+    category: 'RBC & AI',
+    text: "What is RBC's target for enterprise value generated from AI-driven benefits by 2027?",
+    options: ['Up to $1 billion', 'Up to $500 million'],
+    correctIndex: 0,
+    funFact: 'RBC is targeting up to $1 billion in enterprise value from AI-driven benefits by 2027 — spanning productivity, smarter decisions, and better client experiences.',
+  },
+
+  {
+    id: 'race-13',
+    phase: 'race',
+    category: 'RBC & AI',
+    text: "What is the name of RBC's proprietary foundation model?",
+    options: ['ATOM', 'Aiden'],
+    correctIndex: 0,
+    funFact: 'ATOM is RBC\'s proprietary foundation model. (Aiden was the name of an earlier AI-powered electronic trading platform from RBC Capital Markets — easy to mix up!)',
+  },
+
+  {
+    id: 'race-14',
+    phase: 'race',
+    category: 'RBC & AI',
+    text: "Approximately what fraction of RBC's workforce is currently using customized genAI tools?",
+    options: ['One-third', 'One-half'],
+    correctIndex: 0,
+    funFact: 'Roughly a third of RBC\'s workforce already uses customized generative-AI tools in their day-to-day work — and that share keeps growing.',
+  },
+
+  {
+    id: 'race-15',
+    phase: 'race',
+    category: 'RBC & AI',
+    text: 'How many employees does RBC aim to empower with AI capabilities?',
+    options: ['More than 100,000', 'More than 50,000'],
+    correctIndex: 0,
+    funFact: 'RBC aims to empower more than 100,000 employees with AI capabilities — putting the tools in the hands of the whole team, not just a specialist few.',
+  },
 ]
 
 // ─── PIT QUESTIONS (phase: 'pit', ~6 questions — ultra-short, 4-second gut-checks) ────
@@ -171,5 +223,61 @@ export const pitQuestions: Question[] = [
     options: ['Generates from learned patterns', 'Looks facts up live'],
     correctIndex: 0,
     funFact: 'No live lookup — it has a knowledge cut-off. Add retrieval (RAG) if you need current info.',
+  },
+
+  // ── AI Literacy (quick gut-checks) ──────────────────────────────────────────
+
+  {
+    id: 'pit-07',
+    phase: 'pit',
+    category: 'AI Literacy',
+    text: 'What does "AI" stand for?',
+    options: ['Artificial Intelligence', 'Automated Intelligence'],
+    correctIndex: 0,
+  },
+
+  {
+    id: 'pit-08',
+    phase: 'pit',
+    category: 'AI Literacy',
+    text: 'What is a foundation model?',
+    options: ['A large AI model trained on massive datasets', 'A basic calculator program'],
+    correctIndex: 0,
+  },
+
+  {
+    id: 'pit-09',
+    phase: 'pit',
+    category: 'AI Literacy',
+    text: 'What does "genAI" stand for?',
+    options: ['Generative Artificial Intelligence', 'General Artificial Intelligence'],
+    correctIndex: 0,
+  },
+
+  {
+    id: 'pit-10',
+    phase: 'pit',
+    category: 'AI Literacy',
+    text: 'Which of these is an example of AI in banking?',
+    options: ['A chatbot answering customer questions', 'A traditional filing cabinet'],
+    correctIndex: 0,
+  },
+
+  {
+    id: 'pit-11',
+    phase: 'pit',
+    category: 'AI Literacy',
+    text: 'What is machine learning?',
+    options: ['A type of AI that learns from data and improves over time', 'A system that follows only pre-programmed rules'],
+    correctIndex: 0,
+  },
+
+  {
+    id: 'pit-12',
+    phase: 'pit',
+    category: 'AI Literacy',
+    text: 'Which best describes responsible AI?',
+    options: ['Developing AI with ethical principles and transparency', 'Using AI without any oversight'],
+    correctIndex: 0,
   },
 ]

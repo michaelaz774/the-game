@@ -1,0 +1,333 @@
+/* leaderboardPage.css — full-screen live timing board (route: /leaderboard).
+   Built for a large booth display, but degrades to phone widths. Uses the
+   global theme tokens from theme.css. */
+
+.lbp {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(16px, 3vw, 40px);
+  gap: clamp(16px, 2.5vw, 32px);
+  color: var(--ink);
+  background:
+    radial-gradient(1400px 700px at 50% -10%, #1b243f 0%, transparent 60%),
+    linear-gradient(180deg, var(--asphalt-2) 0%, var(--asphalt) 100%);
+  overflow: hidden;
+}
+
+/* ── Header ── */
+.lbp__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: clamp(10px, 1.5vw, 20px);
+}
+
+.lbp__series {
+  font-size: clamp(12px, 1.4vw, 18px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rbc-gold);
+  font-weight: 700;
+}
+
+.lbp__title {
+  margin: 4px 0 0;
+  font-size: clamp(28px, 4.5vw, 64px);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.lbp__status {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.5vw, 22px);
+  font-size: clamp(11px, 1.2vw, 16px);
+  color: var(--ink-dim);
+}
+
+.lbp__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+/* Live = shared Supabase data. */
+.lbp__badge--live {
+  color: var(--f1-red);
+  background: rgba(225, 6, 0, 0.12);
+  border: 1px solid rgba(225, 6, 0, 0.4);
+}
+
+/* Local = this device's localStorage only (no live sync). */
+.lbp__badge--local {
+  color: var(--rbc-gold);
+  background: rgba(254, 223, 1, 0.1);
+  border: 1px solid rgba(254, 223, 1, 0.35);
+}
+
+.lbp__live-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--f1-red);
+  box-shadow: 0 0 0 0 rgba(225, 6, 0, 0.7);
+  animation: lbp-pulse 1.4s ease-out infinite;
+}
+
+@keyframes lbp-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(225, 6, 0, 0.7); }
+  70% { box-shadow: 0 0 0 12px rgba(225, 6, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(225, 6, 0, 0); }
+}
+
+.lbp__racers {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.lbp__updated {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Empty / loading ── */
+.lbp__empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(16px, 2vw, 26px);
+  color: var(--ink-dim);
+}
+
+/* ── Podium ── */
+.lbp-podium {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1fr;
+  align-items: end;
+  gap: clamp(10px, 1.6vw, 24px);
+}
+
+.lbp-podium__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: clamp(14px, 1.8vw, 28px) clamp(10px, 1.4vw, 22px);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--carbon) 0%, var(--asphalt-2) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow);
+}
+
+.lbp-podium__card--empty {
+  background: rgba(255, 255, 255, 0.02);
+  border-style: dashed;
+  box-shadow: none;
+  min-height: 180px;
+}
+
+/* P1 elevated and gold; P2/P3 slightly shorter. */
+.lbp-podium__card--p1 {
+  border-color: var(--rbc-gold);
+  box-shadow: 0 0 0 1px var(--rbc-gold), 0 18px 50px rgba(254, 223, 1, 0.18);
+  transform: translateY(-14px);
+}
+.lbp-podium__card--p2 { border-color: rgba(192, 200, 214, 0.5); }
+.lbp-podium__card--p3 { border-color: rgba(205, 127, 50, 0.5); }
+
+.lbp-podium__medal { font-size: clamp(24px, 3vw, 44px); line-height: 1; }
+
+.lbp-podium__pos {
+  font-size: clamp(13px, 1.4vw, 18px);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--ink-dim);
+}
+.lbp-podium__card--p1 .lbp-podium__pos { color: var(--rbc-gold); }
+
+.lbp-podium__name {
+  font-size: clamp(18px, 2.4vw, 34px);
+  font-weight: 800;
+  line-height: 1.1;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lbp-podium__dept {
+  font-size: clamp(11px, 1.2vw, 15px);
+  color: var(--ink-dim);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lbp-podium__time {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: clamp(22px, 3.4vw, 48px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.lbp-podium__card--p1 .lbp-podium__time { color: var(--rbc-gold); }
+
+.lbp-podium__stats {
+  display: flex;
+  justify-content: center;
+  gap: clamp(10px, 1.4vw, 22px);
+  margin-top: 6px;
+  padding-top: 10px;
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lbp-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.lbp-stat__value {
+  font-family: var(--font-mono);
+  font-size: clamp(13px, 1.5vw, 20px);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.lbp-stat__label {
+  font-size: clamp(9px, 1vw, 12px);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-dim);
+}
+
+/* ── Runner-up timing tower (scrollable) ── */
+.lbp-tower {
+  flex: 1;
+  min-height: 0; /* allow the inner list to scroll inside the flex column */
+  display: flex;
+  flex-direction: column;
+  background: rgba(10, 14, 26, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.lbp-tower__empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-dim);
+  font-size: clamp(13px, 1.4vw, 18px);
+}
+
+.lbp-tower__head,
+.lbp-tower__row {
+  display: grid;
+  grid-template-columns: 64px 1fr 72px 140px 120px;
+  align-items: center;
+  gap: 12px;
+  padding: clamp(8px, 1vw, 14px) clamp(14px, 1.6vw, 24px);
+}
+
+.lbp-tower__head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: rgba(17, 24, 43, 0.96);
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: clamp(10px, 1.1vw, 13px);
+  letter-spacing: 0.1em;
+  color: var(--ink-dim);
+  font-weight: 700;
+}
+
+.lbp-tower__rows {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.lbp-tower__row {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: clamp(14px, 1.5vw, 20px);
+}
+.lbp-tower__row:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+.lbp-tower__row:last-child { border-bottom: none; }
+
+.lbp-tower__col { min-width: 0; }
+.lbp-tower__col--pos {
+  font-weight: 800;
+  color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
+}
+.lbp-tower__col--driver {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.lbp-tower__name {
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lbp-tower__dept {
+  font-size: clamp(10px, 1.1vw, 13px);
+  color: var(--ink-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lbp-tower__col--acc {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-dim);
+}
+.lbp-tower__col--time {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.lbp-tower__col--gap {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-dim);
+}
+
+/* ── Narrow screens: stack the podium, hide low-value columns ── */
+@media (max-width: 640px) {
+  .lbp-podium {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+  .lbp-podium__card--p1 { transform: none; order: -1; }
+  .lbp-podium__card--empty { display: none; }
+
+  .lbp-tower__head,
+  .lbp-tower__row {
+    grid-template-columns: 44px 1fr 96px 96px;
+  }
+  .lbp-tower__col--acc { display: none; }
+}

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useGame } from '../game/useGame'
+import { primeMusic } from '../lib/audio'
 import './pitwall.css'
 
 export function Landing() {
@@ -23,6 +24,9 @@ export function Landing() {
 
   function handleGo() {
     if (!canGo) return
+    // Unlock the race music inside this tap gesture so it can start later, when
+    // the lights go out (a timer-driven transition with no gesture of its own).
+    primeMusic()
     game.setProfile({
       name: trimmedName,
       email: trimmedEmail.toLowerCase(),

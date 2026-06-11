@@ -32,16 +32,25 @@ export async function submitScore(entry: ScoreEntry): Promise<void> {
   }
 }
 
-/**
- * Fetch the top `limit` scores. Merges remote (Supabase) and local results,
- * deduplicates by name+lapTimeMs, and returns sorted fastest-first.
- * Falls back to local-only on any Supabase error.
- */
-export async function fetchTopScores(limit: number): Promise<ScoreEntry[]> {
-  const local = getScores()
-  const sb = getSupabase()
+/** Which store the displayed scores came from. */
+export type LeaderboardSource = 'live' | 'local'
 
-  let remote: ScoreEntry[] = []
+export interface LeaderboardResult {
+  entries: ScoreEntry[]
+  /** 'live' = shared Supabase data; 'local' = this device's localStorage only. */
+  source: LeaderboardSource
+}
+
+/**
+ * Fetch the top `limit` scores from a SINGLE source — never a mix.
+ *
+ * When Supabase is configured and reachable, returns the shared remote board
+ * tagged 'live'. Otherwise (not configured, or a network/query error) returns
+ * this device's localStorage board tagged 'local'. The `source` lets the UI
+ * label exactly what the viewer is looking at.
+ */
+export async function fetchTopScores(limit: number): Promise<LeaderboardResult> {
+  const sb = getSupabase()
 
   if (sb) {
     try {
@@ -52,7 +61,7 @@ export async function fetchTopScores(limit: number): Promise<ScoreEntry[]> {
         .limit(limit)
 
       if (!error && data) {
-        remote = data.map((row) => ({
+        const entries: ScoreEntry[] = data.map((row) => ({
           name: row.name as string,
           email: (row.email as string | null) ?? undefined,
           department: (row.department as string | null) ?? undefined,
@@ -61,22 +70,38 @@ export async function fetchTopScores(limit: number): Promise<ScoreEntry[]> {
           total: row.total as number,
           createdAt: new Date(row.created_at as string).getTime(),
         }))
+        return { entries, source: 'live' }
       }
     } catch {
-      // Network failure — fall through to local-only
+      // Network/query failure — fall through to local-only below.
     }
   }
 
-  // Merge, dedupe by name+lapTimeMs key, sort, slice
-  const merged = [...remote, ...local]
-  const seen = new Set<string>()
-  const deduped = merged.filter((e) => {
-    const key = `${e.name}|${e.lapTimeMs}`
-    if (seen.has(key)) return false
-    seen.add(key)
-    return true
-  })
+  // Local-only: already sorted fastest-first by storage.getScores().
+  return { entries: getScores().slice(0, limit), source: 'local' }
+}
 
-  deduped.sort((a, b) => a.lapTimeMs - b.lapTimeMs)
-  return deduped.slice(0, limit)
+/**
+ * Live updates: invoke `onChange` whenever a score is inserted/updated/deleted
+ * in the remote table, so a display can refetch immediately instead of waiting
+ * for the next poll. Returns an unsubscribe function. No-op (returns a no-op
+ * unsubscribe) when Supabase isn't configured — callers should still poll as a
+ * fallback for the offline/local case.
+ */
+export function subscribeScores(onChange: () => void): () => void {
+  const sb = getSupabase()
+  if (!sb) return () => {}
+
+  const channel = sb
+    .channel('public:scores')
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: TABLE },
+      () => onChange(),
+    )
+    .subscribe()
+
+  return () => {
+    void sb.removeChannel(channel)
+  }
 }
